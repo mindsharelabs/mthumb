@@ -31,7 +31,7 @@
  * loaded by mthumb. This will save you having to re-edit these variables
  * everytime you download a new version
 */
-define ('VERSION', '1.0'); // Version of this script
+define ('VERSION', '1.0.1'); // Version of this script
 define ('TIMTHUMBVERSION', '2.8.13'); // Version TimThumb last merged with
 
 //Load a config file if it exists. Otherwise, use the values below
@@ -257,8 +257,6 @@ if(!isset($ALLOWED_SITES)) {
 // -------------------------------------------------------------
 // -------------- STOP EDITING CONFIGURATION HERE --------------
 // -------------------------------------------------------------
-
-mthumb::start();
 
 if(!class_exists('mthumb')) :
 	class mthumb {
@@ -1461,3 +1459,5 @@ if(!class_exists('mthumb')) :
 		}
 	}
 endif;
+
+mthumb::start();
