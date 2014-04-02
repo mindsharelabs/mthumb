@@ -11,6 +11,8 @@
  *
  */
 
+//$_SERVER['DOCUMENT_ROOT'] = '/path/to/your/root/'; // uncomment this for tilde support
+
 global $ALLOWED_SITES;
 
 // Max sizes
