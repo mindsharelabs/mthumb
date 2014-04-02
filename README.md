@@ -1,8 +1,9 @@
-mthumb
+mThumb
 ======
 
-mThumb - TimThumb improved.
+TimThumb improved.
 
-Changelog
+==Changelog==
 
+* 2.8.13 - changed version number to match TimThumb, added user config file
 * 1.0 - merge with TimThumb 2.8.13, added fix for tilde ~ in URLs

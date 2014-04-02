@@ -34,7 +34,7 @@
 
 //$_SERVER['DOCUMENT_ROOT'] = '/path/to/your/root/'; // uncomment this for tilde support
 
-define ('VERSION', '1.0.2'); // Version of this script
+define ('VERSION', '2.8.13'); // Version of this script
 define ('TIMTHUMBVERSION', '2.8.13'); // Version TimThumb last merged with
 
 //Load a config file if it exists. Otherwise, use the values below
