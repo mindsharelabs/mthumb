@@ -11,7 +11,8 @@
  *
  */
 
-//$_SERVER['DOCUMENT_ROOT'] = '/path/to/your/root/'; // uncomment this for tilde support
+$_SERVER['DOCUMENT_ROOT'] = realpath(dirname(__FILE__).'/../../../../../'); // tilde support for mthumb, in default WP install this should result in the same value as ABSPATH
+//var_dump($_SERVER['DOCUMENT_ROOT']); die;
 
 global $ALLOWED_SITES;
 
@@ -35,3 +36,4 @@ $ALLOWED_SITES = array(
 	'mindsharelabs.com',
 	'mindsharestudios.com'
 );
+
