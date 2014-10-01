@@ -31,11 +31,8 @@
  * loaded by mthumb. This will save you having to re-edit these variables
  * everytime you download a new version
 */
-
-//$_SERVER['DOCUMENT_ROOT'] = '/path/to/your/root/'; // uncomment this for tilde support
-
-define ('VERSION', '2.8.13'); // Version of this script
-define ('TIMTHUMBVERSION', '2.8.13'); // Version TimThumb last merged with
+define ('VERSION', '2.8.14');                                                                        // Version of this script
+define ('TIMTHUMBVERSION', '2.8.14'); // Version TimThumb last merged with
 
 //Load a config file if it exists. Otherwise, use the values below
 if(file_exists(dirname(__FILE__).'/timthumb-config.php')) {
@@ -316,6 +313,7 @@ if(!class_exists('mthumb')) :
 					@mkdir(FILE_CACHE_DIRECTORY);
 					if(!is_dir(FILE_CACHE_DIRECTORY)) {
 						$this->error("Could not create the file cache directory.");
+
 						return FALSE;
 					}
 				}
@@ -357,6 +355,7 @@ if(!class_exists('mthumb')) :
 
 			if(strlen($this->src) <= 3) {
 				$this->error("No image specified");
+
 				return FALSE;
 			}
 			if(BLOCK_EXTERNAL_LEECHERS && array_key_exists('HTTP_REFERER', $_SERVER) && (!preg_match('/^https?:\/\/(?:www\.)?'.$this->myHost.'(?:$|\/)/i', $_SERVER['HTTP_REFERER']))) {
@@ -369,6 +368,7 @@ if(!class_exists('mthumb')) :
 				header("Pragma: no-cache");
 				header('Expires: '.gmdate('D, d M Y H:i:s', time()));
 				echo $imgData;
+
 				return FALSE;
 				exit(0);
 			}
@@ -380,6 +380,7 @@ if(!class_exists('mthumb')) :
 			}
 			if($this->isURL && (!ALLOW_EXTERNAL)) {
 				$this->error("You are not allowed to fetch images from an external website.");
+
 				return FALSE;
 			}
 			if($this->isURL) {
@@ -411,6 +412,7 @@ if(!class_exists('mthumb')) :
 					$this->debug(1, "Could not find the local image: {$this->localImage}");
 					$this->error("Could not find the internal image you specified.");
 					$this->set404();
+
 					return FALSE;
 				}
 				$this->debug(1, "Local image path is {$this->localImage}");
@@ -435,6 +437,7 @@ if(!class_exists('mthumb')) :
 				if(!ALLOW_EXTERNAL) {
 					$this->debug(1, "Got a request for an external image but ALLOW_EXTERNAL is disabled so returning error msg.");
 					$this->error("You are not allowed to fetch images from an external website.");
+
 					return FALSE;
 				}
 				$this->debug(3, "Got request for external image. Starting serveExternalImage.");
@@ -453,6 +456,7 @@ if(!class_exists('mthumb')) :
 				$this->debug(3, "Got request for internal image. Starting serveInternalImage()");
 				$this->serveInternalImage();
 			}
+
 			return TRUE;
 		}
 
@@ -475,12 +479,14 @@ if(!class_exists('mthumb')) :
 				$this->serveErrors();
 				exit(0);
 			}
+
 			return FALSE;
 		}
 
 		protected function tryBrowserCache() {
 			if(BROWSER_CACHE_DISABLE) {
 				$this->debug(3, "Browser caching is disabled");
+
 				return FALSE;
 			}
 			if(!empty($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
@@ -508,18 +514,22 @@ if(!class_exists('mthumb')) :
 				$this->debug(3, "The conditional get's if-modified-since unixtime is $iftime");
 				if($iftime < 1) {
 					$this->debug(3, "Got an invalid conditional get modified since time. Returning false.");
+
 					return FALSE;
 				}
 				if($iftime < $mtime) { //Real file or cache file has been modified since last request, so force refetch.
 					$this->debug(3, "File has been modified since last fetch.");
+
 					return FALSE;
 				} else { //Otherwise serve a 304
 					$this->debug(3, "File has not been modified since last get, so serving a 304.");
 					header($_SERVER['SERVER_PROTOCOL'].' 304 Not Modified');
 					$this->debug(1, "Returning 304 not modified");
+
 					return TRUE;
 				}
 			}
+
 			return FALSE;
 		}
 
@@ -535,11 +545,13 @@ if(!class_exists('mthumb')) :
 						if(time() - @filemtime($this->cachefile) > WAIT_BETWEEN_FETCH_ERRORS) {
 							$this->debug(3, "File is older than ".WAIT_BETWEEN_FETCH_ERRORS." seconds. Deleting and returning false so app can try and load file.");
 							@unlink($this->cachefile);
+
 							return FALSE; //to indicate we didn't serve from cache and app should try and load
 						} else {
 							$this->debug(3, "Empty cachefile is still fresh so returning message saying we had an error fetching this image from remote host.");
 							$this->set404();
 							$this->error("An error occured fetching image.");
+
 							return FALSE;
 						}
 					}
@@ -548,11 +560,13 @@ if(!class_exists('mthumb')) :
 				}
 				if($this->serveCacheFile()) {
 					$this->debug(3, "Succesfully served cachefile {$this->cachefile}");
+
 					return TRUE;
 				} else {
 					$this->debug(3, "Failed to serve cachefile {$this->cachefile} - Deleting it from cache.");
 					//Image serving failed. We can't retry at this point, but lets remove it from cache so the next request recreates it
 					@unlink($this->cachefile);
+
 					return TRUE;
 				}
 			}
@@ -561,6 +575,7 @@ if(!class_exists('mthumb')) :
 		protected function error($err) {
 			$this->debug(3, "Adding error message: $err");
 			$this->errors[] = $err;
+
 			return FALSE;
 		}
 
@@ -568,6 +583,7 @@ if(!class_exists('mthumb')) :
 			if(sizeof($this->errors) > 0) {
 				return TRUE;
 			}
+
 			return FALSE;
 		}
 
@@ -590,20 +606,24 @@ if(!class_exists('mthumb')) :
 			$this->debug(3, "Local image path is $this->localImage");
 			if(!$this->localImage) {
 				$this->sanityFail("localImage not set after verifying it earlier in the code.");
+
 				return FALSE;
 			}
 			$fileSize = filesize($this->localImage);
 			if($fileSize > MAX_FILE_SIZE) {
 				$this->error("The file you specified is greater than the maximum allowed file size.");
+
 				return FALSE;
 			}
 			if($fileSize <= 0) {
 				$this->error("The file you specified is <= 0 bytes.");
+
 				return FALSE;
 			}
 			$this->debug(3, "Calling processImageAndWriteToCache() for local image.");
 			if($this->processImageAndWriteToCache($this->localImage)) {
 				$this->serveCacheFile();
+
 				return TRUE;
 			} else {
 				return FALSE;
@@ -623,6 +643,7 @@ if(!class_exists('mthumb')) :
 				if(!touch($lastCleanFile)) {
 					$this->error("Could not create cache clean timestamp file.");
 				}
+
 				return;
 			}
 			if(@filemtime($lastCleanFile) < (time() - FILE_CACHE_TIME_BETWEEN_CLEANS)) { //Cache was last cleaned more than 1 day ago
@@ -641,10 +662,12 @@ if(!class_exists('mthumb')) :
 						}
 					}
 				}
+
 				return TRUE;
 			} else {
 				$this->debug(3, "Cache was cleaned less than ".FILE_CACHE_TIME_BETWEEN_CLEANS." seconds ago so no cleaning needed.");
 			}
+
 			return FALSE;
 		}
 
@@ -980,11 +1003,13 @@ if(!class_exists('mthumb')) :
 				fclose($fh);
 				@unlink($lockFile);
 				@unlink($tempfile4);
+
 				return $this->error("Could not get a lock for writing.");
 			}
 			$this->debug(3, "Done image replace with security header. Cleaning up and running cleanCache()");
 			imagedestroy($canvas);
 			imagedestroy($image);
+
 			return TRUE;
 		}
 
@@ -1023,6 +1048,7 @@ if(!class_exists('mthumb')) :
 				if(is_file($file)) {
 					return $this->realpath($file);
 				}
+
 				return $this->error("Could not find your website document root and the file specified doesn't exist in mthumbs directory. We don't support serving files outside mthumb's directory without a document root for security reasons.");
 			} else {
 				if(!is_dir($this->docRoot)) {
@@ -1081,6 +1107,7 @@ if(!class_exists('mthumb')) :
 					}
 				}
 			}
+
 			return FALSE;
 		}
 
@@ -1102,7 +1129,7 @@ if(!class_exists('mthumb')) :
 
 		protected function serveWebshot() {
 			$this->debug(3, "Starting serveWebshot");
-			$instr = "Please follow the instructions at http://code.google.com/p/mthumb/ to set your server up for taking website screenshots.";
+		$instr = "Please follow the instructions at http://code.google.com/p/timthumb/ to set your server up for taking website screenshots.";
 			if(!is_file(WEBSHOT_CUTYCAPT)) {
 				return $this->error("CutyCapt is not installed. $instr");
 			}
@@ -1126,9 +1153,12 @@ if(!class_exists('mthumb')) :
 			if(!preg_match('/^https?:\/\/[a-zA-Z0-9\.\-]+/i', $url)) {
 				return $this->error("Invalid URL supplied.");
 			}
-			$url = preg_replace('/[^A-Za-z0-9\-\.\_\~:\/\?\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=]+/', '', $url); //RFC 3986
-			//Very important we don't allow injection of shell commands here. URL is between quotes and we are only allowing through chars allowed by a the RFC
-			// which AFAIKT can't be used for shell injection.
+		$url = preg_replace('/[^A-Za-z0-9\-\.\_:\/\?\&\+\;\=]+/', '', $url); //RFC 3986 plus ()$ chars to prevent exploit below. Plus the following are also removed: @*!~#[]',
+		// 2014 update by Mark Maunder: This exploit: http://cxsecurity.com/issue/WLB-2014060134
+		// uses the $(command) shell execution syntax to execute arbitrary shell commands as the web server user.
+		// So we're now filtering out the characters: '$', '(' and ')' in the above regex to avoid this.
+		// We are also filtering out chars rarely used in URLs but legal accoring to the URL RFC which might be exploitable. These include: @*!~#[]',
+		// We're doing this because we're passing this URL to the shell and need to make very sure it's not going to execute arbitrary commands.
 			if(WEBSHOT_XVFB_RUNNING) {
 				putenv('DISPLAY=:100.0');
 				$command = "$cuty $proxy --max-wait=$timeout --user-agent=\"$ua\" --javascript=$jsOn --java=$javaOn --plugins=$pluginsOn --js-can-open-windows=off --url=\"$url\" --out-format=$format --out=$tempfile";
@@ -1140,11 +1170,13 @@ if(!class_exists('mthumb')) :
 			$this->debug(3, "Received output: $out");
 			if(!is_file($tempfile)) {
 				$this->set404();
+
 				return $this->error("The command to create a thumbnail failed.");
 			}
 			$this->cropTop = TRUE;
 			if($this->processImageAndWriteToCache($tempfile)) {
 				$this->debug(3, "Image processed succesfully. Serving from cache");
+
 				return $this->serveCacheFile();
 			} else {
 				return FALSE;
@@ -1154,6 +1186,7 @@ if(!class_exists('mthumb')) :
 		protected function serveExternalImage() {
 			if(!preg_match('/^https?:\/\/[a-zA-Z0-9\-\.]+/i', $this->src)) {
 				$this->error("Invalid URL supplied.");
+
 				return FALSE;
 			}
 			$tempfile = tempnam($this->cacheDirectory, 'mthumb');
@@ -1165,6 +1198,7 @@ if(!class_exists('mthumb')) :
 				touch($this->cachefile);
 				$this->debug(3, "Error fetching URL: ".$this->lastURLError);
 				$this->error("Error reading the URL you specified from remote host.".$this->lastURLError);
+
 				return FALSE;
 			}
 
@@ -1174,10 +1208,12 @@ if(!class_exists('mthumb')) :
 				@unlink($this->cachefile);
 				touch($this->cachefile);
 				$this->error("The remote file is not a valid image. Mimetype = '".$mimeType."'".$tempfile);
+
 				return FALSE;
 			}
 			if($this->processImageAndWriteToCache($tempfile)) {
 				$this->debug(3, "Image processed succesfully. Serving from cache");
+
 				return $this->serveCacheFile();
 			} else {
 				return FALSE;
@@ -1198,6 +1234,7 @@ if(!class_exists('mthumb')) :
 			$this->debug(3, "Serving {$this->cachefile}");
 			if(!is_file($this->cachefile)) {
 				$this->error("serveCacheFile called in mthumb but we couldn't find the cached file.");
+
 				return FALSE;
 			}
 			$fp = fopen($this->cachefile, 'rb');
@@ -1209,6 +1246,7 @@ if(!class_exists('mthumb')) :
 			fseek($fp, 3, SEEK_CUR);
 			if(ftell($fp) != strlen($this->filePrependSecurityBlock) + 6) {
 				@unlink($this->cachefile);
+
 				return $this->error("The cached image file seems to be corrupt.");
 			}
 			$imageDataSize = filesize($this->cachefile) - (strlen($this->filePrependSecurityBlock) + 6);
@@ -1223,9 +1261,11 @@ if(!class_exists('mthumb')) :
 				$content = substr($content, strlen($this->filePrependSecurityBlock) + 6);
 				echo $content;
 				$this->debug(3, "Served using file_get_contents and echo");
+
 				return TRUE;
 			} else {
 				$this->error("Cache file could not be loaded.");
+
 				return FALSE;
 			}
 		}
@@ -1254,6 +1294,7 @@ if(!class_exists('mthumb')) :
 				header('Cache-Control: max-age='.BROWSER_CACHE_MAX_AGE.', must-revalidate');
 				header('Expires: '.$gmdate_expires);
 			}
+
 			return TRUE;
 		}
 
@@ -1302,6 +1343,7 @@ if(!class_exists('mthumb')) :
 				if($ci) {
 					return $ci;
 				}
+
 				return $rem;
 			} else {
 				if($rem) {
@@ -1313,6 +1355,7 @@ if(!class_exists('mthumb')) :
 				if($ci) {
 					return $ci;
 				}
+
 				return "UNKNOWN";
 			}
 		}
@@ -1338,6 +1381,7 @@ if(!class_exists('mthumb')) :
 			if(is_array($info) && $info['mime']) {
 				return $info['mime'];
 			}
+
 			return '';
 		}
 
@@ -1377,6 +1421,7 @@ if(!class_exists('mthumb')) :
 				self::$curlFH = fopen($tempfile, 'w');
 				if(!self::$curlFH) {
 					$this->error("Could not open $tempfile for writing.");
+
 					return FALSE;
 				}
 				self::$curlDataWritten = 0;
@@ -1399,14 +1444,17 @@ if(!class_exists('mthumb')) :
 				}
 				if($httpStatus == 302) {
 					$this->error("External Image is Redirecting. Try alternate image url");
+
 					return FALSE;
 				}
 				if($curlResult) {
 					curl_close($curl);
+
 					return TRUE;
 				} else {
 					$this->lastURLError = curl_error($curl);
 					curl_close($curl);
+
 					return FALSE;
 				}
 			} else {
@@ -1426,8 +1474,10 @@ if(!class_exists('mthumb')) :
 				}
 				if(!file_put_contents($tempfile, $img)) {
 					$this->error("Could not write to $tempfile.");
+
 					return FALSE;
 				}
+
 				return TRUE;
 			}
 		}
@@ -1448,8 +1498,10 @@ if(!class_exists('mthumb')) :
 			$content = @file_get_contents($file);
 			if($content != FALSE) {
 				echo $content;
+
 				return TRUE;
 			}
+
 			return FALSE;
 		}
 
