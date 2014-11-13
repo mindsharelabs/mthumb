@@ -6,7 +6,7 @@ A secure, slimmed down version of the ol' standby TimThumb.
 Project Goals
 =======
 
-Like many WordPress developers we've been making use of the old TimThumb script for years. It works well and offers features not yet available in other projects, like BFI_Thumb (although that does look like a promising start). However, we've still got a lot of sites that we are supporting that require some of TimThumb's mre advancced features like crop positioning. 
+Like many WordPress developers we've been making use of the old TimThumb script for years. It works well and offers features not yet available in other projects, like BFI_Thumb (although that does look like a promising start). However, we've still got a lot of sites that we are supporting that require some of TimThumb's more advanced features like crop positioning and filters. 
  
  So we decided to create a leaner, meaner, MUCH MORE SECURE fork of TimThumb. To that end we've foregone full backward compatibility with the old TimThumb code. Here are the major changes:
 
