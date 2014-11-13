@@ -1,4 +1,4 @@
-mthumb: WARNING NOT READY FOR PRODUCTION. DO NOT USE.
+mthumb
 ======
 
 A secure, slimmed down version of the ol' standby TimThumb. 
@@ -28,8 +28,10 @@ Get Involved
 ========
 You can help out by testing this and reporting bugs. We ARE NOT interested in preserving 100% compatibility with all of Timthumb's less frequently used features as mentioned above but we ARE VERY motivated to make sure this code is secure. So any security issues will be dealt with immediately. 
 
-Pull request are most welcome. Cheers.
+Pull requests are most welcome. Cheers.
 
-==Changelog==
+
+Changelog
+========
 
 * 1.0 - first proper release

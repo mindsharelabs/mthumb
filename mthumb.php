@@ -1,8 +1,5 @@
 <?php
 /*
- * WARNING NOT READY FOR PRODUCTION. DO NOT USE.
- *
- *
 mThumb
 URI: https://github.com/mindsharestudios/mthumb
 Description: TimThumb improved.
@@ -50,7 +47,7 @@ License URI: LICENSE
 /**
  * Version of this script *
  */
-define ('VERSION', '0.9');
+define ('VERSION', '0.9.1');
 
 //Load a config file if it exists. Otherwise, use the values below
 if(file_exists(dirname(__FILE__).'/mthumb-config.php')) {
@@ -61,7 +58,7 @@ if(!defined('DEBUG_ON')) {
 	/**
 	 * Enable debug logging to web server error log (STDERR)
 	 */
-	define ('DEBUG_ON', TRUE);
+	define ('DEBUG_ON', false);
 }
 
 if(!defined('DEBUG_LEVEL')) {
@@ -69,196 +66,189 @@ if(!defined('DEBUG_LEVEL')) {
 	 * Debug level 1 is less noisy and 3 is the most noisy
 	 *
 	 */
-	define ('DEBUG_LEVEL', 3);
+	define ('DEBUG_LEVEL', 2);
 }
 
-// Display error messages. Set to false to turn off errors (good for production websites)
 if(!defined('DISPLAY_ERROR_MESSAGES')) {
 	/**
-	 *
+	 * Display error messages. Set to false to turn off errors (good for production websites)
 	 */
 	define ('DISPLAY_ERROR_MESSAGES', TRUE);
 }
 
-// Allow image fetching from external websites. Will check against ALLOWED_SITES always.
 if(!defined('ALLOW_EXTERNAL')) {
 	/**
-	 *
+	 *  Allow image fetching from external websites. Will check against ALLOWED_SITES always.     *
 	 */
 	define ('ALLOW_EXTERNAL', false);
 }
 
-// Should we store resized/modified images on disk to speed things up?
+if(!isset($ALLOWED_SITES)) {
+	/**
+	 *  If ALLOW_EXTERNAL is true then external images will only be fetched from these domains and their subdomains.
+	 */
+	$ALLOWED_SITES = array(
+		'flickr.com',
+		'staticflickr.com',
+		'img.youtube.com',
+		'upload.wikimedia.org',
+		'imgur.com',
+		'imageshack.us',
+		'tinypic.com',
+	);
+}
+
 if(!defined('FILE_CACHE_ENABLED')) {
 	/**
-	 *
+	 * Should we store resized/modified images on disk to speed things up?
 	 */
 	define ('FILE_CACHE_ENABLED', TRUE);
 }
 
 if(!defined('DAY_IN_SECONDS')) {
-	/**
-	 *
-	 */
 	define('DAY_IN_SECONDS', 24 * 60 * 60);
 }
-// How often the cache is cleaned
+
 if(!defined('FILE_CACHE_TIME_BETWEEN_CLEANS')) {
 	/**
-	 *
+	 * How often the cache is cleaned
 	 */
 	define ('FILE_CACHE_TIME_BETWEEN_CLEANS', DAY_IN_SECONDS * 30);
 }
 
-// How old does a file have to be to be deleted from the cache
 if(!defined('FILE_CACHE_MAX_FILE_AGE')) {
 	/**
-	 *
+	 *  How old does a file have to be to be deleted from the cache
 	 */
 	define ('FILE_CACHE_MAX_FILE_AGE', DAY_IN_SECONDS * 60);
 }
-// What to put at the end of all files in the cache directory so we can identify them
+
 if(!defined('FILE_CACHE_SUFFIX')) {
 	/**
-	 *
+	 * What to put at the end of all files in the cache directory so we can identify them
 	 */
 	define ('FILE_CACHE_SUFFIX', '.txt');
 }
-// What to put at the beg of all files in the cache directory so we can identify them
+
 if(!defined('FILE_CACHE_PREFIX')) {
 	/**
-	 *
+	 * What to put at the beg of all files in the cache directory so we can identify them
 	 */
 	define ('FILE_CACHE_PREFIX', 'mthumb');
 }
 
-// Directory where images are cached. Left blank it will use the system temporary directory (which is better for security)
 if(!defined('FILE_CACHE_DIRECTORY')) {
 	/**
+	 * Directory where images are cached. Left blank it will use the system temporary directory (which is better for security)
 	 *
 	 */
-	define ('FILE_CACHE_DIRECTORY', FALSE);
+	//define ('FILE_CACHE_DIRECTORY', './cache');
+	define ('FILE_CACHE_DIRECTORY', FALSE); // @todo test on more deployments
 }
 
 if(!defined('TEN_MB_IN_BTYES')) {
-	/**
-	 *
-	 */
 	define ('TEN_MB_IN_BTYES', 10485760);
 }
-// This is the max internal or external file size that we'll process.
+//
 if(!defined('MAX_FILE_SIZE')) {
 	/**
-	 *
+	 * This is the max internal or external file size that we'll process.
 	 */
 	define ('MAX_FILE_SIZE', TEN_MB_IN_BTYES * 2);
 }
 
-// Timeout duration for Curl. This only applies if you have Curl installed and aren't using PHP's default URL fetching mechanism.
 if(!defined('CURL_TIMEOUT')) {
 	/**
+	 * Timeout duration for Curl. This only applies if you have Curl installed and aren't using PHP's default URL fetching mechanism.
 	 *
 	 */
 	define ('CURL_TIMEOUT', 20);
 }
 
-// Time to wait between errors fetching remote file
 if(!defined('WAIT_BETWEEN_FETCH_ERRORS')) {
 	/**
-	 *
+	 * Time to wait between errors fetching remote file
 	 */
 	define ('WAIT_BETWEEN_FETCH_ERRORS', 3600);
 }
 
-// Time to cache in the browser
 if(!defined('BROWSER_CACHE_MAX_AGE')) {
 	/**
+	 * Time to cache in the browser
 	 *
 	 */
 	define ('BROWSER_CACHE_MAX_AGE', DAY_IN_SECONDS * 30);
 }
 
-// Use for testing if you want to disable all browser caching
 if(!defined('BROWSER_CACHE_DISABLE')) {
 	/**
-	 *
+	 *  Use for testing if you want to disable all browser caching
 	 */
 	define ('BROWSER_CACHE_DISABLE', TRUE); // @todo mindshare change this
 }
 
 if(!defined('MAX_WIDTH')) {
-	/**
-	 *
-	 */
 	define ('MAX_WIDTH', 3200);
 }
 if(!defined('MAX_HEIGHT')) {
-	/**
-	 *
-	 */
 	define ('MAX_HEIGHT', 3200);
 }
 
-// Define if a png image should have a transparent background color. Use False value if you want to display a custom coloured canvas_colour
 if(!defined('PNG_IS_TRANSPARENT')) {
 	/**
+	 * Define if a png image should have a transparent background color. Use False value if you want to display a custom coloured canvas_colour
 	 *
 	 */
 	define ('PNG_IS_TRANSPARENT', TRUE);
 }
 
-// Default image quality. Allows override in mthumb-config.php
 if(!defined('DEFAULT_Q')) {
 	/**
+	 * Default image quality. Allows override in mthumb-config.php
 	 *
 	 */
 	define ('DEFAULT_Q', 85);
 }
 
-// Default zoom/crop setting. Allows override in mthumb-config.php
 if(!defined('DEFAULT_ZC')) {
 	/**
-	 *
+	 * Default zoom/crop setting. Allows override in mthumb-config.php
 	 */
 	define ('DEFAULT_ZC', 1);
 }
 
-// Default image filters. Allows override in mthumb-config.php
 if(!defined('DEFAULT_F')) {
 	/**
-	 *
+	 * Default image filters. Allows override in mthumb-config.php
 	 */
 	define ('DEFAULT_F', '');
 }
 
-// Default sharpen value. Allows override in mthumb-config.php
+//
 if(!defined('DEFAULT_S')) {
 	/**
-	 *
+	 * Default sharpen value. Allows override in mthumb-config.php
 	 */
 	define ('DEFAULT_S', 0);
 }
 
-// Default canvas colour. Allows override in mthumb-config.php
 if(!defined('DEFAULT_CC')) {
 	/**
-	 *
+	 * Default canvas colour. Allows override in mthumb-config.php
 	 */
 	define ('DEFAULT_CC', 'ffffff');
 }
 
-// Default thumbnail width. Allows override in mthumb-config.php
 if(!defined('DEFAULT_WIDTH')) {
 	/**
-	 *
+	 * Default thumbnail width. Allows override in mthumb-config.php
 	 */
 	define ('DEFAULT_WIDTH', 125);
 }
 
-// Default thumbnail height. Allows override in mthumb-config.php
 if(!defined('DEFAULT_HEIGHT')) {
 	/**
-	 *
+	 * Default thumbnail height. Allows override in mthumb-config.php
 	 */
 	define ('DEFAULT_HEIGHT', 125);
 }
@@ -268,64 +258,37 @@ if(!defined('DEFAULT_HEIGHT')) {
  * LOCAL_FILE_BASE_DIRECTORY = Override the DOCUMENT_ROOT. This is best used in mthumb-config.php
  */
 
-//Image compression is enabled if either of these point to valid paths
-
-//These are now disabled by default because the file sizes of PNGs (and GIFs) are much smaller than we used to generate.
-//They only work for PNGs. GIFs and JPEGs are not affected.
 if(!defined('OPTIPNG_ENABLED')) {
 	/**
-	 *
+	 * Image compression is enabled if either of these point to valid paths. They only work for PNGs. GIFs and JPEGs are not affected.
 	 */
 	define ('OPTIPNG_ENABLED', TRUE);
 }
 
-//This will run first because it gives better compression than pngcrush.
 if(!defined('OPTIPNG_PATH')) {
 	/**
+	 * This will run first because it gives better compression than pngcrush.
 	 *
 	 */
 	define ('OPTIPNG_PATH', '/usr/bin/optipng');
 }
 
 if(!defined('PNGCRUSH_ENABLED')) {
-	/**
-	 *
-	 */
 	define ('PNGCRUSH_ENABLED', TRUE);
 }
 
-//This will only run if OPTIPNG_PATH is not set or is not valid
 if(!defined('PNGCRUSH_PATH')) {
 	/**
-	 *
+	 * This will only run if OPTIPNG_PATH is not set or is not valid
 	 */
 	define ('PNGCRUSH_PATH', '/usr/bin/pngcrush');
 }
 
-// If ALLOW_EXTERNAL is true then external images will only be fetched from these domains and their subdomains.
-if(!isset($ALLOWED_SITES)) {
-	$ALLOWED_SITES = array(
-		'flickr.com',
-		'staticflickr.com',
-		'picasa.com',
-		'img.youtube.com',
-		'upload.wikimedia.org',
-		'photobucket.com',
-		'imgur.com',
-		'imageshack.us',
-		'tinypic.com',
-	);
-}
-
 // -------------- STOP EDITING CONFIGURATION HERE --------------
 
-if(!class_exists('mthumb')) :
-	/**
-	 * Class mthumb
-	 */
-	/**
-	 * Class mthumb
-	 */
+if(!class_exists('mthumb')) : /**
+ * Class mthumb
+ */ {
 	class mthumb {
 		/**
 		 * @var mixed|string
@@ -396,13 +359,18 @@ if(!class_exists('mthumb')) :
 		 */
 		protected $salt = "";
 		/**
+		 * Generally if mthumb.php is modified (upgraded) then the salt changes and all cache files are recreated. This is a backup mechanism to force regen.
+		 *
 		 * @var int
 		 */
-		protected $fileCacheVersion = 1; //Generally if mthumb.php is modified (upgraded) then the salt changes and all cache files are recreated. This is a backup mechanism to force regen.
+		protected $fileCacheVersion = 1;
 		/**
+		 *
+		 * Designed to have three letter mime type, space, question mark and greater than symbol appended. 6 bytes total.
+		 *
 		 * @var string
 		 */
-		protected $filePrependSecurityBlock = "<?php die('Execution denied!'); //"; //Designed to have three letter mime type, space, question mark and greater than symbol appended. 6 bytes total.
+		protected $filePrependSecurityBlock = "<?php die('Execution denied!'); //";
 		/**
 		 * @var int
 		 */
@@ -486,7 +454,6 @@ if(!class_exists('mthumb')) :
 			}
 
 			// start mindshare fix for tilde's
-
 			$this->url = parse_url($this->src);
 			$this->src = preg_replace('/https?:\/\/(?:www\.)?'.$this->myHost.'/i', '', $this->src);
 
@@ -495,6 +462,7 @@ if(!class_exists('mthumb')) :
 
 				return FALSE;
 			}
+
 			// Always block external sites from using this script
 			if(array_key_exists('HTTP_REFERER', $_SERVER) && (!preg_match('/^https?:\/\/(?:www\.)?'.$this->myHost.'(?:$|\/)/i', $_SERVER['HTTP_REFERER']))) {
 				// base64 encoded red image that says 'no hotlinkers' nothing to worry about! :)
@@ -582,8 +550,9 @@ if(!class_exists('mthumb')) :
 					return FALSE;
 				}
 				$this->debug(3, "Got request for external image. Starting serveExternalImage.");
+				$this->serveExternalImage();
 			} else {
-				$this->debug(3, "Got request for internal image. Starting serveInternalImage()");
+				$this->debug(3, "Got request for internal image. Starting serveInternalImage");
 				$this->serveInternalImage();
 			}
 
@@ -639,7 +608,8 @@ if(!class_exists('mthumb')) :
 
 					return FALSE;
 				}
-				if($iftime < $mtime) { //Real file or cache file has been modified since last request, so force refetch.
+				// Real file or cache file has been modified since last request, so force refetch.
+				if($iftime < $mtime) {
 					$this->debug(3, "File has been modified since last fetch.");
 
 					return FALSE;
@@ -734,8 +704,7 @@ if(!class_exists('mthumb')) :
 			}
 			$html .= '</ul>';
 			echo '<h1>An error has occured</h1>The following error(s) occured:<br />'.$html.'<br />';
-			echo '<br />Query String : '.htmlentities($_SERVER['QUERY_STRING'], ENT_QUOTES);
-
+			echo '<br />Query String: '.htmlentities($_SERVER['QUERY_STRING'], ENT_QUOTES);
 		}
 
 		/**
@@ -764,6 +733,46 @@ if(!class_exists('mthumb')) :
 				$this->serveCacheFile();
 
 				return TRUE;
+			} else {
+				return FALSE;
+			}
+		}
+
+		/**
+		 * @return bool
+		 */
+		protected function serveExternalImage() {
+			if(!preg_match('/^https?:\/\/[a-zA-Z0-9\-\.]+/i', $this->src)) {
+				$this->error("Invalid URL supplied.");
+
+				return FALSE;
+			}
+			$tempfile = tempnam($this->cacheDirectory, 'mthumb');
+			$this->debug(3, "Fetching external image into temporary file $tempfile");
+			$this->toDelete($tempfile);
+			// fetch file here
+			if(!$this->getURL($this->src, $tempfile)) {
+				@unlink($this->cachefile);
+				touch($this->cachefile);
+				$this->debug(3, "Error fetching URL: ".$this->lastURLError);
+				$this->error("Error reading the URL you specified from remote host.".$this->lastURLError);
+
+				return FALSE;
+			}
+
+			$mimeType = $this->getMimeType($tempfile);
+			if(!preg_match("/^image\/(?:jpg|jpeg|gif|png)$/i", $mimeType)) {
+				$this->debug(3, "Remote file has invalid mime type: $mimeType");
+				@unlink($this->cachefile);
+				touch($this->cachefile);
+				$this->error("The remote file is not a valid image. Mimetype = '".$mimeType."'".$tempfile);
+
+				return FALSE;
+			}
+			if($this->processImageAndWriteToCache($tempfile)) {
+				$this->debug(3, "Image processed succesfully. Serving from cache");
+
+				return $this->serveCacheFile();
 			} else {
 				return FALSE;
 			}
@@ -1200,7 +1209,7 @@ if(!class_exists('mthumb')) :
 					return $this->realpath($file);
 				}
 
-				return $this->error("Could not find your website document root and the file specified doesn't exist in mthumbs directory. We don't support serving files outside mthumb's directory without a document root for security reasons.");
+				return $this->error("Could not find your website document root and the file specified doesn't exist in mThumb's directory. We don't support serving files outside mThumb's directory without a document root for security reasons.");
 			} else {
 				if(!is_dir($this->docRoot)) {
 					$this->error("Server path does not exist. Ensure variable \$_SERVER['DOCUMENT_ROOT'] is set correctly");
@@ -1268,13 +1277,13 @@ if(!class_exists('mthumb')) :
 		 * @return string
 		 */
 		protected function realpath($path) {
-			//try to remove any relative paths
+			// try to remove any relative paths
 			$remove_relatives = '/\w+\/\.\.\//';
 			while(preg_match($remove_relatives, $path)) {
 				$path = preg_replace($remove_relatives, '', $path);
 			}
-			//if any remain use PHP realpath to strip them out, otherwise return $path
-			//if using realpath, any symlinks will also be resolved
+			// if any remain use PHP realpath to strip them out, otherwise return $path
+			// if using realpath, any symlinks will also be resolved
 			return preg_match('#^\.\./|/\.\./#', $path) ? realpath($path) : $path;
 		}
 
@@ -1475,7 +1484,7 @@ if(!class_exists('mthumb')) :
 		 * @return bool
 		 */
 		protected function sanityFail($msg) {
-			return $this->error("There is a problem in the mthumb code. Message: Please report this error at <a href='http://code.google.com/p/mthumb/issues/list'>mthumb's bug tracking page</a>: $msg");
+			return $this->error("There is a problem in the mThumb code. Message: Please report this error at <a href='https://github.com/mindsharestudios/mthumb/issues'>mThumb's issue tracking page</a>: $msg");
 		}
 
 		/**
@@ -1549,7 +1558,7 @@ if(!class_exists('mthumb')) :
 					$this->set404();
 				}
 				if($httpStatus == 302) {
-					$this->error("External Image is Redirecting. Try alternate image url");
+					$this->error("External Image is Redirecting. Try alternate image URL.");
 
 					return FALSE;
 				}
@@ -1630,6 +1639,7 @@ if(!class_exists('mthumb')) :
 			return $this->is404;
 		}
 	}
+}
 endif;
 
 mthumb::start();
