@@ -47,7 +47,7 @@ License URI: LICENSE
 /**
  * Version of this script *
  */
-define ('VERSION', '0.9.1');
+define ('VERSION', '1.0');
 
 //Load a config file if it exists. Otherwise, use the values below
 if(file_exists(dirname(__FILE__).'/mthumb-config.php')) {
@@ -58,7 +58,7 @@ if(!defined('DEBUG_ON')) {
 	/**
 	 * Enable debug logging to web server error log (STDERR)
 	 */
-	define ('DEBUG_ON', false);
+	define ('DEBUG_ON', FALSE);
 }
 
 if(!defined('DEBUG_LEVEL')) {
@@ -80,7 +80,7 @@ if(!defined('ALLOW_EXTERNAL')) {
 	/**
 	 *  Allow image fetching from external websites. Will check against ALLOWED_SITES always.     *
 	 */
-	define ('ALLOW_EXTERNAL', false);
+	define ('ALLOW_EXTERNAL', FALSE);
 }
 
 if(!isset($ALLOWED_SITES)) {
@@ -184,7 +184,7 @@ if(!defined('BROWSER_CACHE_DISABLE')) {
 	/**
 	 *  Use for testing if you want to disable all browser caching
 	 */
-	define ('BROWSER_CACHE_DISABLE', TRUE); // @todo mindshare change this
+	define ('BROWSER_CACHE_DISABLE', FALSE);
 }
 
 if(!defined('MAX_WIDTH')) {
