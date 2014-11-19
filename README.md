@@ -33,5 +33,5 @@ Pull requests are most welcome. Cheers.
 
 Changelog
 ========
-
+* 3.0 - version number update to calm down some automated scanners that think this is an old version of TimThumb
 * 1.0 - first proper release
