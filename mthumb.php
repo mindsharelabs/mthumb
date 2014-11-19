@@ -3,7 +3,7 @@
 mThumb
 URI: https://github.com/mindsharestudios/mthumb
 Description: TimThumb improved.
-Version: 1.0
+Version: 3.0
 Author: Mindshare Studios, Inc.
 Author URI: http://mind.sh/are/
 License: GNU General Public License
@@ -47,7 +47,7 @@ License URI: LICENSE
 /**
  * Version of this script *
  */
-define ('VERSION', '1.0');
+define ('VERSION', '3.0');
 
 //Load a config file if it exists. Otherwise, use the values below
 if(file_exists(dirname(__FILE__).'/mthumb-config.php')) {
