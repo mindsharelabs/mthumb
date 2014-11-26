@@ -46,49 +46,49 @@ mThumb Parameters
 <td>src</td>
 <td>source</td>
 <td>url to image</td>
-<td>Tells mThumb which image to resize › <a href="http://www.binarymoon.co.uk/2010/08/mThumb/">mThumb basic properties tutorial</a></td>
+<td>Tells mThumb which image to resize › <a href="http://www.binarymoon.co.uk/2010/08/timthumb/">mThumb basic properties tutorial</a></td>
 </tr>
 <tr>
 <td>w</td>
 <td>width</td>
 <td>the width to resize to</td>
-<td>Remove the width to scale proportionally (will then need the height) › <a href="http://www.binarymoon.co.uk/2010/08/mThumb/">mThumb width tutorial</a></td>
+<td>Remove the width to scale proportionally (will then need the height) › <a href="http://www.binarymoon.co.uk/2010/08/timthumb/">mThumb width tutorial</a></td>
 </tr>
 <tr>
 <td>h</td>
 <td>height</td>
 <td>the height to resize to</td>
-<td>Remove the height to scale proportionally (will then need the width) › <a href="http://www.binarymoon.co.uk/2010/08/mThumb/">mThumb height tutorial</a></td>
+<td>Remove the height to scale proportionally (will then need the width) › <a href="http://www.binarymoon.co.uk/2010/08/timthumb/">mThumb height tutorial</a></td>
 </tr>
 <tr>
 <td>q</td>
 <td>quality</td>
 <td>0 – 100</td>
-<td>Compression quality. The higher the number the nicer the image will look. I wouldn’t recommend going any higher than about 95 else the image will get too large › <a href="http://www.binarymoon.co.uk/2010/08/mThumb/">mThumb image quality tutorial</a></td>
+<td>Compression quality. The higher the number the nicer the image will look. I wouldn’t recommend going any higher than about 95 else the image will get too large › <a href="http://www.binarymoon.co.uk/2010/08/timthumb/">mThumb image quality tutorial</a></td>
 </tr>
 <tr>
 <td>a</td>
 <td>alignment</td>
 <td>c, t, l, r, b, tl, tr, bl, br</td>
-<td>Crop alignment. c = center, t = top, b = bottom, r = right, l = left. The positions can be joined to create diagonal positions › <a href="http://www.binarymoon.co.uk/2010/08/mThumb-part-4-moving-crop-location/">mThumb crop position tutorial</a></td>
+<td>Crop alignment. c = center, t = top, b = bottom, r = right, l = left. The positions can be joined to create diagonal positions › <a href="http://www.binarymoon.co.uk/2010/08/timthumb-part-4-moving-crop-location/">mThumb crop position tutorial</a></td>
 </tr>
 <tr>
 <td>zc</td>
 <td>zoom / crop</td>
 <td>0, 1, 2, 3</td>
-<td>Change the cropping and scaling settings › <a href="http://www.binarymoon.co.uk/2011/03/mThumb-proportional-scaling-security-improvements/">mThumb crop scaling tutorial</a></td>
+<td>Change the cropping and scaling settings › <a href="http://www.binarymoon.co.uk/2011/03/timthumb-proportional-scaling-security-improvements/">mThumb crop scaling tutorial</a></td>
 </tr>
 <tr>
 <td>f</td>
 <td>filters</td>
 <td>too many to mention</td>
-<td>Let’s you apply image filters to change the resized picture. For instance you can change brightness/ contrast or even blur the image › <a href="http://www.binarymoon.co.uk/2010/08/mThumb-image-filters/">mThumb image filter tutorial</a></td>
+<td>Let’s you apply image filters to change the resized picture. For instance you can change brightness/ contrast or even blur the image › <a href="http://www.binarymoon.co.uk/2010/08/timthumb-image-filters/">mThumb image filter tutorial</a></td>
 </tr>
 <tr>
 <td>s</td>
 <td>sharpen</td>
 <td></td>
-<td>Apply a sharpen filter to the image, makes scaled down images look a little crisper › <a href="http://www.binarymoon.co.uk/2010/08/mThumb-imageNOT_FOUND_IMAGE-filters/">tutorial</a></td>
+<td>Apply a sharpen filter to the image, makes scaled down images look a little crisper › <a href="http://www.binarymoon.co.uk/2010/08/timthumb-image-filters/">tutorial</a></td>
 </tr>
 <tr>
 <td>cc</td>
