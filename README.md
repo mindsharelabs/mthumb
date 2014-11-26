@@ -88,7 +88,7 @@ mThumb Parameters
 <td>s</td>
 <td>sharpen</td>
 <td></td>
-<td>Apply a sharpen filter to the image, makes scaled down images look a little crisper › <a href="http://www.binarymoon.co.uk/2010/08/mThumb-image-filters/">tutorial</a></td>
+<td>Apply a sharpen filter to the image, makes scaled down images look a little crisper › <a href="http://www.binarymoon.co.uk/2010/08/mThumb-imageNOT_FOUND_IMAGE-filters/">tutorial</a></td>
 </tr>
 <tr>
 <td>cc</td>
@@ -197,11 +197,6 @@ There are a whole bunch of settings that are not controlled by the normal query 
 <td>MAX_HEIGHT</td>
 <td>3600</td>
 <td>Put a sensible limit of the height of the resized image (so that crazy large images can’t be created)</td>
-</tr>
-<tr>
-<td>NOT_FOUND_IMAGE</td>
-<td>null</td>
-<td>Image to display if a 404 error occurs, instead of showing an error message</td>
 </tr>
 <tr>
 <td>PNG_IS_TRANSPARENT</td>
