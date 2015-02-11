@@ -14,7 +14,7 @@ License URI: LICENSE
  *
  * @created   12/21/13 2:02 PM
  * @author    Mindshare Studios, Inc.
- * @copyright Copyright (c) 2014
+ * @copyright Copyright (c) 2013-2015
  * @link      http://www.mindsharelabs.com/kb/
  *
  * Copyright 2013-2015  Mindshare Studios, Inc. (https://mind.sh/are/)
