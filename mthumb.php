@@ -2,8 +2,8 @@
 /*
 mThumb
 URI: https://github.com/mindsharestudios/mthumb
-Description: TimThumb improved.
-Version: 3.0
+Description: A secure PHP image resize script.
+Version: 3.0.1
 Author: Mindshare Studios, Inc.
 Author URI: http://mind.sh/are/
 License: GNU General Public License
@@ -66,14 +66,14 @@ if(!defined('DEBUG_LEVEL')) {
 	 * Debug level 1 is less noisy and 3 is the most noisy
 	 *
 	 */
-	define ('DEBUG_LEVEL', 2);
+	define ('DEBUG_LEVEL', 1);
 }
 
 if(!defined('DISPLAY_ERROR_MESSAGES')) {
 	/**
 	 * Display error messages. Set to false to turn off errors (good for production websites)
 	 */
-	define ('DISPLAY_ERROR_MESSAGES', TRUE);
+	define ('DISPLAY_ERROR_MESSAGES', FALSE);
 }
 
 if(!defined('ALLOW_EXTERNAL')) {
