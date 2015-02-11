@@ -17,7 +17,7 @@ License URI: LICENSE
  * @copyright Copyright (c) 2014
  * @link      http://www.mindsharelabs.com/kb/
  *
- * Copyright 2014  Mindshare Studios, Inc. (http://mind.sh/are/)
+ * Copyright 2013-2015  Mindshare Studios, Inc. (https://mind.sh/are/)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 3, as
@@ -689,10 +689,10 @@ if(!class_exists('mthumb')) : /**
 		 *
 		 */
 		protected function serveErrors() {
-			header($_SERVER['SERVER_PROTOCOL'].' 400 Bad Request');
 			if(!DISPLAY_ERROR_MESSAGES) {
 				return;
 			}
+			header($_SERVER['SERVER_PROTOCOL'].' 400 Bad Request');
 			$html = '<ul>';
 			foreach($this->errors as $err) {
 				$html .= '<li>'.htmlentities($err).'</li>';
