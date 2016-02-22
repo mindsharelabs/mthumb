@@ -26,10 +26,9 @@ Like many WordPress developers we've been making use of the old TimThumb script 
 
 Get Involved
 ========
-You can help out by testing this and reporting bugs. We ARE NOT interested in preserving 100% compatibility with all of Timthumb's less frequently used features as mentioned above but we ARE VERY motivated to make sure this code is secure. So any security issues will be dealt with immediately. 
+You can help out by testing this and reporting bugs. We ARE NOT interested in preserving 100% compatibility with all of TimThumb's less frequently used features as mentioned above but we ARE VERY motivated to make sure this code is secure. So any security issues will be dealt with immediately. 
 
 Pull requests are most welcome. Cheers.
-
 
 mThumb Parameters
 ========
@@ -209,5 +208,6 @@ There are a whole bunch of settings that are not controlled by the normal query 
 
 Changelog
 ========
-* 3.0 - version number update to calm down some automated scanners that think this is an old version of TimThumb
-* 1.0 - first proper release
+* 3.0.1 - Bugfix for unwritable cache folder
+* 3.0 - Version number update to calm down some automated scanners that think this is an old version of TimThumb
+* 1.0 - First proper release
