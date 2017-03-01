@@ -1052,6 +1052,27 @@ if (!class_exists('mthumb')) : /**
 				}
 			}
 
+			// exif rotation support
+			if (preg_match('/^image\/(?:jpg|jpeg)$/i', $mimeType)){ 
+				$exif = exif_read_data($localImage);
+
+				if ($exif && array_key_exists('Orientation', $exif)) {
+					$ort = $exif['Orientation'];
+
+					switch ($ort) {
+						case 3: // 180 rotate left
+							$canvas = imagerotate($canvas, 180, 0);
+							break;
+						case 6: // 	90 rotate right
+							$canvas = imagerotate($canvas, -90, 0);
+							break;
+						case 8: // 	90 rotate left
+							$canvas = imagerotate($canvas, 90, 0);
+							break;
+					}
+				}
+			}
+
 			// sharpen image
 			if ($sharpen && function_exists('imageconvolution')) {
 
